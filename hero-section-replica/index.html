@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAS Hero Replica</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-left">
+            <a href="#hero" class="logo-link">
+                <img src="assets/forma-logo.svg" alt="ФОРМА" class="logo">
+            </a>
+            <nav class="header-nav">
+                <a href="#price">Прайс</a>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+        </div>
+
+        <div class="header-right">
+            <div class="header-address">
+                <a href="#contacts">Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор"</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="header-socials">
+                <a href="#" class="social-icon-header phone-icon">
+                    <img src="assets/phone-icon.png" alt="Phone">
+                </a>
+                <a href="#" class="social-icon-header whatsapp-icon">
+                    <img src="assets/whatsapp-color.png" alt="WhatsApp">
+                </a>
+                <a href="#" class="social-icon-header telegram-icon">
+                    <img src="assets/telegram-color.png" alt="Telegram">
+                </a>
+            </div>
+            <button class="pill-button header-btn">
+                <span>ЗАПИСАТЬСЯ</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay">
+        <button class="mobile-menu-close" aria-label="Close Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="#000000" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div class="mobile-nav-links-container">
+            <a href="#price" class="mobile-nav-link">Прайс</a>
+            <a href="#portfolio" class="mobile-nav-link">Портфолио</a>
+            <a href="#contacts" class="mobile-nav-link">Контакты</a>
+        </div>
+        <div class="mobile-menu-info">
+            <p>Москва, Одинцово, Можайское шоссе 133а<br>ТЦ "Вестор", 2 этаж</p>
+            <p>Ежедневно 10.00 - 22.00</p>
+        </div>
+    </div>
+
+    <main class="hero" id="hero">
+        <div class="visual-container">
+            <video src="assets/nails.mp4" autoplay muted loop playsinline class="hero-video"></video>
+        </div>
+
+        <h1 class="headline">
+            Твои руки -<br>наше искусство
+        </h1>
+
+
+
+
+
+        <div class="bottom-icon">
+            <button class="pill-button">
+                <span>ЗАПИСАТЬСЯ</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="btn-icon">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <section id="price" class="section-price">
+        <h2 class="section-title">Прайс</h2>
+
+        <div class="price-container">
+            <div class="price-category">
+                <div class="category-header">
+                    <span>Маникюр</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="services-list">
+                    <div class="services-list-inner">
+                        <div class="service-item">
+                            <span class="service-name">Комплекс "Все включено"</span>
+                            <span class="service-price">2500</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Маникюр без покрытия</span>
+                            <span class="service-price">1200</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Покрытие гель-лак</span>
+                            <span class="service-price">1000</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Дизайн (1 ноготь)</span>
+                            <span class="service-price">100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-category">
+                <div class="category-header">
+                    <span>Педикюр</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="services-list">
+                    <div class="services-list-inner">
+                        <div class="service-item">
+                            <span class="service-name">Комплекс "Smart Педикюр"</span>
+                            <span class="service-price">3200</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Педикюр без покрытия</span>
+                            <span class="service-price">2000</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Обработка стоп</span>
+                            <span class="service-price">1000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-category">
+                <div class="category-header">
+                    <span>Дополнительно</span>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="services-list">
+                    <div class="services-list-inner">
+                        <div class="service-item">
+                            <span class="service-name">Снятие чужого покрытия</span>
+                            <span class="service-price">300</span>
+                        </div>
+                        <div class="service-item">
+                            <span class="service-name">Ремонт ногтя</span>
+                            <span class="service-price">200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section-portfolio">
+        <h2 class="section-title">Портфолио</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item"></div>
+            <div class="portfolio-item"></div>
+            <div class="portfolio-item"></div>
+            <div class="portfolio-item"></div>
+            <div class="portfolio-item"></div>
+            <div class="portfolio-item"></div>
+        </div>
+    </section>
+
+    <section id="contacts" class="section-contacts">
+        <h2 class="section-title">Контакты</h2>
+        <div class="contacts-container">
+            <div class="contact-details">
+                <h3>Ждем вас в гости</h3>
+                <p class="address">Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор", 2 этаж</p>
+                <p class="hours">Ежедневно 10.00 - 22.00</p>
+                <p class="phone-large"><a href="tel:+79999999999">+7 (999) 999-99-99</a></p>
+                <div class="social-links-large">
+                    <a href="#" class="social-btn">WhatsApp</a>
+                    <a href="#" class="social-btn">Telegram</a>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://yandex.ru/map-widget/v1/?text=Одинцово,+Можайское+шоссе,+133А&z=17" width="100%"
+                    height="300" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe>
+            </div>
+        </div>
+    </section>
+
+    </section>
+
+    <div class="fab-container">
+        <div class="fab-options">
+            <a href="tel:+79999999999" class="fab-option" aria-label="Call">
+                <img src="assets/phone-icon.png" alt="Call">
+            </a>
+            <a href="#" class="fab-option fab-whatsapp-btn" aria-label="WhatsApp">
+                <img src="assets/whatsapp-color.png" alt="WhatsApp">
+            </a>
+            <a href="#" class="fab-option" aria-label="Telegram">
+                <img src="assets/telegram-color.png" alt="Telegram">
+            </a>
+            <button class="fab-option fab-online" aria-label="Online Booking">
+                <span>ОНЛАЙН<br>ЗАПИСЬ</span>
+            </button>
+        </div>
+        <button class="fab-main">
+            <span>ЗАПИСАТЬСЯ</span>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
