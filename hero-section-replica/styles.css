@@ -1,0 +1,836 @@
+:root {
+    --bg-color: #F8F5F2;
+    /* Soft Beige */
+    --text-color: #111111;
+    --font-serif: 'Instrument Serif', 'Playfair Display', serif;
+    --font-mono: 'Space Mono', 'Roboto Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    /* Default to mono for details */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    /* Allow horizontal scroll if needed */
+    padding: 10px 24px 24px 24px;
+    /* Reduced top padding from 24px to 10px */
+}
+
+/* Header */
+/* Header */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Align everything to center line */
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    width: 100%;
+    position: fixed;
+    /* Sticky header */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 10px 20px;
+    /* Pushed elements closer to edges */
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent;
+}
+
+.site-header.scrolled {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.logo-link {
+    display: block;
+    margin-top: -15px;
+}
+
+.logo {
+    height: 80px;
+    /* User set this */
+    width: auto;
+    display: block;
+    /* margin-top: -15px; Moved to .logo-link */
+    /* Lift logo higher */
+}
+
+/* Header Groups */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    /* ~1cm gap between logo and nav */
+}
+
+/* Header Navigation - Restored */
+.header-nav {
+    display: flex;
+    gap: 32px;
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    transition: opacity 0.3s ease;
+    font-weight: 900;
+}
+
+.header-nav a:hover {
+    opacity: 0.7;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    /* Space between Address, Icons, and Button */
+}
+
+.header-address {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    /* Increased from 10px for readability */
+    font-weight: 500;
+    color: #111;
+    /* Darker color */
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.header-address a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.header-address a:hover {
+    opacity: 0.7;
+}
+
+.header-socials {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.social-icon-header {
+    width: 28px;
+    height: 28px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Optically balance WhatsApp icon */
+.social-icon-header.whatsapp-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.social-icon-header.phone-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.social-icon-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* No filter needed for colored icons */
+}
+
+.social-icon-header:hover {
+    transform: scale(1.1);
+}
+
+/* WhatsApp Hover Green Removed - using colored image */
+
+/* Header Button */
+.header-btn.pill-button {
+    padding: 10px 24px;
+    font-size: 12px;
+    background: #111;
+    color: white;
+    margin-bottom: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-mono);
+    /* Changed to Mono */
+    font-weight: 700;
+    /* Reduced from 900 */
+    letter-spacing: 0.05em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.header-btn.pill-button:hover {
+    transform: translateY(-2px);
+    background: #000;
+}
+
+/* Updated Info Styles */
+.header-info,
+.working-hours {
+    text-align: center;
+    /* Center aligned within their blocks */
+}
+
+/* Clear old Hero Navigation styles if any remain or reuse names */
+/* .hero-nav removed from HTML */
+
+/* Hero Section */
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.visual-container {
+    position: relative;
+    width: 100%;
+    /* Allow video to size naturally up to max-width */
+    max-width: 500px;
+    /* Constrain video width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 120px;
+    /* Adjust top spacing */
+}
+
+.hero-video {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    /* Optional: smooth corners */
+    mix-blend-mode: multiply;
+    /* Blends white video bg with page bg */
+}
+
+.headline {
+    font-family: var(--font-serif);
+    font-size: 6rem;
+    /* Reduced from 8rem */
+    line-height: 0.9;
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 30px;
+    color: #0d0d0d;
+}
+
+.description {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    /* Increased slightly for better 3-line readability */
+    text-align: center;
+    max-width: 480px;
+    /* Slight increase to accommodate text */
+    color: #333;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+    /* Reduced to bring button closer */
+}
+
+/* Floating Action Button */
+.bottom-icon {
+    /* margin-top: auto; Removed to stop sticking to bottom */
+    margin-bottom: 40px;
+    /* Standard bottom spacing */
+}
+
+.pill-button {
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    /* Fully rounded */
+    padding: 14px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    /* Space between text and icon */
+    font-family: var(--font-serif);
+    /* Slogan font */
+    font-size: 18px;
+    /* Slightly larger for serif readability */
+    font-weight: 400;
+    /* Serif usually looks better regular */
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pill-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background: #000;
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.pill-button:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+
+.pill-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .site-header {
+        font-size: 9px;
+    }
+
+    .headline {
+        font-size: 4rem;
+    }
+
+    .visual-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .scribble {
+        left: 10%;
+    }
+}
+
+/* Price Section */
+.section-price {
+    padding: 40px 5vw 100px 5vw;
+    background-color: var(--bg-color);
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 60px;
+    font-weight: 400;
+}
+
+.price-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.price-category {
+    border-bottom: 1px solid #111;
+    margin-bottom: 0;
+}
+
+.category-header {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    padding: 30px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.category-header:hover {
+    color: #555;
+}
+
+.services-list {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    /* Ensure content is clipped when collapsed */
+}
+
+.services-list.active {
+    grid-template-rows: 1fr;
+    /* Removed padding-bottom from here to avoid jump, handle in inner container or parent */
+}
+
+/* Inner container to hold content for grid transition */
+.services-list-inner {
+    overflow: hidden;
+    padding-bottom: 30px;
+    height: auto;
+    /* Always present to prevent layout shift */
+}
+
+/* No special padding on active state, it's always there but hidden by grid height */
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    /* Reverted to align bottom */
+    /* Align bottom so price lines up with last word */
+    gap: 2px;
+    /* Reduced gap to minimum to fit long text */
+    padding: 10px 0;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: #444;
+}
+
+.service-name {
+    flex: 1;
+    /* Allow name to take space and wrap */
+    min-width: 0;
+    /* Enable shrinking below content size for proper wrapping */
+    margin-right: 2px;
+    /* Minimal visual separation */
+    overflow-wrap: break-word;
+    /* Ensure long words can break */
+}
+
+.service-price {
+    flex-shrink: 0;
+    /* Prevent price from shrinking/wrapping */
+    white-space: nowrap;
+}
+
+.toggle-icon {
+    font-family: var(--font-mono);
+    font-size: 42px;
+    font-weight: 400;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.price-category.active .toggle-icon {
+    transform: rotate(45deg);
+}
+
+/* Portfolio Section */
+.section-portfolio {
+    padding: 40px 5vw 100px 5vw;
+    background-color: var(--bg-color);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    /* Center items if they don't fill width */
+}
+
+.portfolio-item {
+    aspect-ratio: 1;
+    background-color: #ddd;
+    background-image: url('assets/tomato.png');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    /* improved UX to suggest interactivity */
+}
+
+.portfolio-item:hover {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+}
+
+/* Contacts Section */
+.section-contacts {
+    padding: 20px 5vw 40px 5vw;
+    background-color: var(--bg-color);
+}
+
+.contacts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.map-container {
+    flex: 1;
+    min-width: 300px;
+    height: 300px;
+    /* Increased from 200px (1.5x) */
+    background: #eee;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.contact-details {
+    flex: 1;
+    min-width: 300px;
+    text-align: left;
+}
+
+.contact-details h3 {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.address,
+.hours {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.phone-large a {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 24px;
+    color: #111;
+    text-decoration: none;
+    margin: 20px 0;
+    font-weight: 400;
+}
+
+.social-links-large {
+    display: flex;
+    gap: 20px;
+    text-align: left;
+    /* Reverted text-align to left */
+    /* Removed justify-content center */
+}
+
+.social-btn {
+    padding: 8px 24px;
+    border: 1px solid #111;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #111;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-size: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .contacts-container {
+        flex-direction: column;
+    }
+
+    .section-title {
+        font-size: 40px;
+    }
+
+    .headline {
+        font-size: 12vw;
+    }
+
+    .logo {
+        height: 60px;
+    }
+}
+
+/* Mobile Elements Default State (Hidden on Desktop) */
+.mobile-menu-toggle,
+.mobile-location-icon,
+.mobile-nav-overlay,
+.fab-container {
+    display: none;
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+
+    /* Hide Desktop Elements */
+    .header-nav,
+    .header-address,
+    .header-socials,
+    .header-btn {
+        display: none !important;
+    }
+
+    .section-price {
+        padding-top: 80px;
+        /* Increased by ~40px (1cm) */
+    }
+
+    .service-item {
+        font-size: 15px;
+        /* Slightly smaller font for mobile to fit text */
+    }
+
+    /* Header Adjustments */
+    .site-header {
+        padding: 15px 20px;
+        background-color: var(--bg-color);
+        /* Ensure opaque background on mobile */
+    }
+
+    .header-left {
+        gap: 0;
+        /* Remove gap to pull logo left */
+        flex-direction: row;
+        margin-left: -10px;
+        /* Increased shift left */
+        margin-top: 5px;
+        /* Shift lower */
+    }
+
+    /* Mobile Menu Toggle (Hamburger) */
+    .mobile-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+        margin-left: auto;
+        /* Push to right if needed, though it's in header-right now */
+    }
+
+    .mobile-menu-toggle .bar {
+        width: 100%;
+        height: 3px;
+        background-color: #111;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    /* Mobile Location Icon (Removed) */
+    .mobile-location-icon {
+        display: none;
+    }
+
+    /* Mobile Nav Overlay */
+    .mobile-nav-overlay {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /* Move content to top */
+        align-items: center;
+        gap: 0;
+        /* Managed by inner container */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-color);
+        z-index: 1000;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-in-out;
+        padding-top: 25vh;
+        /* Push content down slightly from top */
+    }
+
+    .mobile-nav-overlay.active {
+        display: flex;
+        transform: translateY(0);
+    }
+
+    .mobile-menu-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .mobile-nav-links-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 20vh;
+        /* Increased space to push info lower */
+    }
+
+    .mobile-nav-link {
+        font-family: var(--font-serif);
+        font-size: 32px;
+        color: #111;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .mobile-menu-info {
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    /* FAB Styles */
+    .fab-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 2000;
+        gap: 15px;
+    }
+
+    .fab-main {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: rgba(17, 17, 17, 0.7);
+        animation: fabPulse 2s infinite;
+        /* Consistent with site style */
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .fab-main:hover {
+        transform: scale(1.05);
+    }
+
+    .fab-main span {
+        display: block;
+        max-width: 80%;
+    }
+
+    .fab-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .fab-options.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .fab-option {
+        width: 40px;
+        /* Reduced from 50px to reduce halo */
+        height: 40px;
+        border-radius: 50%;
+        /* Circle */
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .fab-option:hover {
+        transform: scale(1.1);
+    }
+
+    .fab-option img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    .fab-online {
+        background-color: white;
+        color: black;
+        font-family: var(--font-mono);
+        font-size: 8px;
+        font-weight: 700;
+        /* Bold */
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .fab-whatsapp-btn {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+@keyframes fabPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(17, 17, 17, 0.4);
+        transform: scale(1);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(17, 17, 17, 0);
+        transform: scale(1.05);
+        /* Subtle scale pulse */
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(17, 17, 17, 0);
+        transform: scale(1);
+    }
+}
