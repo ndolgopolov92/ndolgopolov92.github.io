@@ -13,6 +13,23 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    outline: none;
+}
+
+*:focus,
+*:active,
+*:focus-visible {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
 }
 
 body {
@@ -301,6 +318,59 @@ body {
     background: #000;
 }
 
+/* Central Button Animations */
+.bottom-icon .pill-button {
+    position: relative;
+    overflow: hidden;
+    animation: btnGlow 3s infinite;
+}
+
+.bottom-icon .pill-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-25deg);
+    animation: btnShine 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes btnGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.1);
+    }
+}
+
+@keyframes btnShine {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    40% {
+        left: 200%;
+        opacity: 0;
+    }
+
+    100% {
+        left: 200%;
+        opacity: 0;
+    }
+}
+
 .btn-icon {
     width: 18px;
     height: 18px;
@@ -330,6 +400,7 @@ body {
     .visual-container {
         width: 100%;
         height: auto;
+        margin-bottom: 60px;
     }
 
     .scribble {
@@ -468,7 +539,8 @@ body {
     /* improved UX to suggest interactivity */
 }
 
-.portfolio-item:hover {
+.portfolio-item:hover,
+.portfolio-item.active {
     filter: grayscale(0%);
     transform: scale(1.02);
 }
@@ -539,6 +611,56 @@ body {
     /* Removed justify-content center */
 }
 
+.map-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.map-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    color: #555;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.map-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.map-icon:hover {
+    transform: scale(1.1);
+}
+
+.map-icon.icon-2gis {
+    color: #65B145;
+    /* 2GIS Green */
+    background: rgba(101, 177, 69, 0.1);
+}
+
+.map-icon.icon-yandex {
+    color: #FC3F1D;
+    /* Yandex Red */
+    background: rgba(252, 63, 29, 0.1);
+}
+
+.map-icon.icon-2gis:hover {
+    background: #65B145;
+    color: white;
+}
+
+.map-icon.icon-yandex:hover {
+    background: #FC3F1D;
+    color: white;
+}
+
 .social-btn {
     padding: 8px 24px;
     border: 1px solid #111;
@@ -553,6 +675,19 @@ body {
 
 .social-btn:hover {
     background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+.social-btn.whatsapp-btn:hover {
+    background: #25D366;
+    border-color: #25D366;
+    color: #fff;
+}
+
+.social-btn.telegram-btn:hover {
+    background: #24A1DE;
+    border-color: #24A1DE;
     color: #fff;
 }
 
@@ -691,8 +826,8 @@ body {
         flex-direction: column;
         align-items: center;
         gap: 30px;
-        margin-bottom: 20vh;
-        /* Increased space to push info lower */
+        margin-bottom: calc(20vh - 40px);
+        /* Reduced space by ~40px */
     }
 
     .mobile-nav-link {
@@ -711,59 +846,45 @@ body {
         line-height: 1.6;
     }
 
+    .mobile-address-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
     /* FAB Styles */
     .fab-container {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        /* Align to right */
         position: fixed;
         bottom: 30px;
         right: 30px;
         z-index: 2000;
-        gap: 15px;
-    }
-
-    .fab-main {
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        background-color: rgba(17, 17, 17, 0.7);
-        animation: fabPulse 2s infinite;
-        /* Consistent with site style */
-        color: white;
-        border: none;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-mono);
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        text-align: center;
-        padding: 5px;
-        transition: transform 0.3s ease;
-    }
-
-    .fab-main:hover {
-        transform: scale(1.05);
-    }
-
-    .fab-main span {
-        display: block;
-        max-width: 80%;
+        gap: 0;
+        /* Gap handled by internal spacing */
     }
 
     .fab-options {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(20px);
         transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        padding: 10px 8px 30px 8px;
+        /* Extra bottom padding to merge with button */
+        border-radius: 50px;
+        box-shadow: 0 0 20px rgba(0, 122, 255, 0.4);
+        /* Blue glow */
+        margin-bottom: -20px;
+        /* Overlap with main button */
+        position: relative;
+        z-index: 1;
     }
 
     .fab-options.active {
@@ -773,13 +894,9 @@ body {
     }
 
     .fab-option {
-        width: 40px;
-        /* Reduced from 50px to reduce halo */
-        height: 40px;
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
-        /* Circle */
-        background-color: white;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -793,44 +910,115 @@ body {
         transform: scale(1.1);
     }
 
-    .fab-option img {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
+    .fab-option svg {
+        width: 20px;
+        height: 20px;
     }
 
-    .fab-online {
-        background-color: white;
-        color: black;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        font-weight: 700;
-        /* Bold */
-        text-transform: uppercase;
-        text-align: center;
-        line-height: 1.2;
+    .fab-phone {
+        background-color: #007AFF;
+        /* Apple Blue */
     }
 
     .fab-whatsapp-btn {
-        width: 34px;
-        height: 34px;
+        background-color: #25D366;
+        /* WhatsApp Green */
+    }
+
+    .fab-telegram {
+        background-color: #24A1DE;
+        /* Telegram Blue */
+    }
+
+    .fab-online-small {
+        background-color: #fff;
+        /* White */
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .fab-online-small span {
+        font-family: var(--font-mono);
+        font-size: 9px;
+        /* Increased from 7px */
+        line-height: 1.1;
+        text-align: center;
+        font-weight: 700;
+        color: #111;
+        display: block;
+    }
+
+    .fab-main {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        /* 3D Gradient & Volume */
+        background: radial-gradient(100% 100% at 30% 30%, rgba(60, 60, 60, 0.6) 0%, rgba(10, 10, 10, 0.6) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        /* Glass edge */
+        color: white;
+        box-shadow:
+            0 8px 20px rgba(0, 0, 0, 0.4),
+            /* Deep drop shadow */
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        /* Top highlight */
+        backdrop-filter: blur(5px);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-sans);
+        /* Changed to Inter/Sans */
+        font-size: 11px;
+        /* Slightly larger/clearer */
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 5px;
+        transition: transform 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Pulse Animation on Pseudo-element to preserve 3D shadows */
+    .fab-main::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        z-index: -1;
+        box-shadow: 0 0 0 0 rgba(17, 17, 17, 0.6);
+        animation: fabPulse 2s infinite;
+    }
+
+    .fab-whatsapp-btn svg {
+        width: 24px;
+        /* Larger than default 20px */
+        height: 24px;
     }
 }
 
 @keyframes fabPulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(17, 17, 17, 0.4);
-        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(17, 17, 17, 0.6);
+        opacity: 1;
     }
 
     70% {
-        box-shadow: 0 0 0 15px rgba(17, 17, 17, 0);
-        transform: scale(1.05);
-        /* Subtle scale pulse */
+        box-shadow: 0 0 0 20px rgba(17, 17, 17, 0);
+        opacity: 0;
     }
 
     100% {
         box-shadow: 0 0 0 0 rgba(17, 17, 17, 0);
-        transform: scale(1);
+        opacity: 0;
     }
 }
