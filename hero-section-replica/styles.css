@@ -549,6 +549,23 @@ body {
 .section-contacts {
     padding: 20px 5vw 40px 5vw;
     background-color: var(--bg-color);
+    position: relative;
+    /* For absolute positioning of signature */
+}
+
+/* ... existing code ... */
+
+.signature {
+    position: absolute;
+    bottom: 10px;
+    right: 5vw;
+    /* Align with padding */
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #ddd;
+    opacity: 0.5;
+    user-select: none;
+    pointer-events: none;
 }
 
 .contacts-container {
@@ -689,6 +706,12 @@ body {
     background: #24A1DE;
     border-color: #24A1DE;
     color: #fff;
+}
+
+@media (max-width: 1250px) {
+    .header-address {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
@@ -882,9 +905,36 @@ body {
         box-shadow: 0 0 20px rgba(0, 122, 255, 0.4);
         /* Blue glow */
         margin-bottom: -20px;
-        /* Overlap with main button */
         position: relative;
         z-index: 1;
+    }
+
+    /* Top Group - Reset to transparent */
+    .fab-group-icons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        backdrop-filter: none;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    /* Bottom Group - Reset to transparent */
+    .fab-group-online {
+        display: flex;
+        justify-content: center;
+        background: transparent;
+        backdrop-filter: none;
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none;
+        width: auto;
+        margin-top: 0;
     }
 
     .fab-options.active {
@@ -931,26 +981,64 @@ body {
     }
 
     .fab-online-small {
-        background-color: #fff;
-        /* White */
-        width: 44px;
-        height: 44px;
+        background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
+        /* Tender Pink Gradient */
+        width: 57px;
+        height: 57px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(255, 182, 193, 0.6);
+        /* Pink glow */
+        border: 2px solid #fff;
+        /* White border for definition */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fabHeartbeat 2.5s infinite;
+    }
+
+    .fab-online-small:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 182, 193, 0.8);
+        animation-play-state: paused;
     }
 
     .fab-online-small span {
         font-family: var(--font-mono);
-        font-size: 9px;
-        /* Increased from 7px */
+        font-size: 13px;
+        /* Increased from 10px (~30%) */
         line-height: 1.1;
         text-align: center;
         font-weight: 700;
         color: #111;
+        /* Dark text for contrast on pink */
         display: block;
+    }
+
+    @keyframes fabHeartbeat {
+        0% {
+            transform: scale(1);
+        }
+
+        5% {
+            transform: scale(1.08);
+        }
+
+        10% {
+            transform: scale(1);
+        }
+
+        15% {
+            transform: scale(1.08);
+        }
+
+        20% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 
     .fab-main {
