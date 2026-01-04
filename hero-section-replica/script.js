@@ -2,6 +2,22 @@
 // Sticky Header Logic
 const header = document.querySelector('.site-header');
 
+// Video Overlay Logic
+const heroVideo = document.querySelector('.hero-video');
+const overlayText = document.querySelector('.video-text-overlay');
+
+if (heroVideo && overlayText) {
+    heroVideo.addEventListener('timeupdate', () => {
+        const time = heroVideo.currentTime;
+        // Appear at 3s, disappear at 7s
+        if (time >= 3 && time < 7) {
+            overlayText.style.opacity = '1';
+        } else {
+            overlayText.style.opacity = '0';
+        }
+    });
+}
+
 window.addEventListener('scroll', () => {
     header.style.left = -window.scrollX + 'px';
     if (window.scrollY > 0) {
@@ -102,7 +118,7 @@ async function fetchAndRenderPrices() {
     } catch (error) {
         console.error('Error fetching prices:', error);
         if (loadingMsg) {
-            loadingMsg.textContent = 'Ошибка загрузки прайса. Пожалуйста, проверьте интернет или попробуйте позже.';
+            loadingMsg.textContent = 'Ошибка загрузки цен. Пожалуйста, проверьте интернет или попробуйте позже.';
             loadingMsg.style.color = 'red';
         }
     }

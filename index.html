@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;700&family=Great+Vibes&display=swap"
         rel="stylesheet">
 </head>
 
@@ -20,9 +20,9 @@
                 <img src="hero-section-replica/assets/forma-logo.svg" alt="ФОРМА" class="logo">
             </a>
             <nav class="header-nav">
-                <a href="#price">Прайс</a>
-                <a href="#portfolio">Портфолио</a>
-                <a href="#contacts">Контакты</a>
+                <a href="#price">Цены</a>
+                <a href="#portfolio">Наши&thinsp;работы</a>
+                <a href="#contacts">Как&thinsp;найти</a>
             </nav>
         </div>
 
@@ -64,9 +64,9 @@
             </svg>
         </button>
         <div class="mobile-nav-links-container">
-            <a href="#price" class="mobile-nav-link">Прайс</a>
-            <a href="#portfolio" class="mobile-nav-link">Портфолио</a>
-            <a href="#contacts" class="mobile-nav-link">Контакты</a>
+            <a href="#price" class="mobile-nav-link">Цены</a>
+            <a href="#portfolio" class="mobile-nav-link">Наши&thinsp;работы</a>
+            <a href="#contacts" class="mobile-nav-link">Как&thinsp;найти</a>
         </div>
         <div class="mobile-menu-info">
             <p><a href="#contacts" class="mobile-address-link">Москва, Одинцово, Можайское шоссе 133а<br>ТЦ "Вестор", 2
@@ -79,12 +79,14 @@
         <div class="visual-container">
             <video src="hero-section-replica/assets/nails.mp4" autoplay muted loop playsinline
                 class="hero-video"></video>
+            <div class="video-text-mask"></div>
+            <div class="video-text-mask-2"></div>
+            <div class="video-text-overlay">Твоя идеальная форма</div>
         </div>
 
         <h1 class="headline">
-            Твои руки -<br>наше искусство
+            <span>Ваш</span> <span>стандарт</span><br><span class="italic-stretch">ухоженности</span>
         </h1>
-
 
 
 
@@ -102,16 +104,16 @@
     </main>
 
     <section id="price" class="section-price">
-        <h2 class="section-title">Прайс</h2>
+        <h2 class="section-title">Цены</h2>
 
         <div class="price-container">
             <!-- Dynamic content loaded from Google Sheet -->
-            <div class="loading-message" style="text-align:center; padding: 20px;">Загрузка прайса...</div>
+            <div class="loading-message" style="text-align:center; padding: 20px;">Загрузка цен...</div>
         </div>
     </section>
 
     <section id="portfolio" class="section-portfolio">
-        <h2 class="section-title">Портфолио</h2>
+        <h2 class="section-title">Наши&thinsp;работы</h2>
         <div class="portfolio-grid">
             <div class="portfolio-item" style="background-image: url('hero-section-replica/assets/photo%201.png');">
             </div>
@@ -133,7 +135,7 @@
     </section>
 
     <section id="contacts" class="section-contacts">
-        <h2 class="section-title">Контакты</h2>
+        <h2 class="section-title">Как&thinsp;найти</h2>
         <div class="contacts-container">
             <div class="contact-details">
                 <h3>Ждем вас в гости</h3>
@@ -155,6 +157,15 @@
                                 d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             <text x="12" y="10" font-size="5" text-anchor="middle" fill="white" font-weight="bold"
                                 dy=".3em">Я</text>
+                        </svg>
+                    </a>
+                    <a href="https://n613524.yclients.com" target="_blank" class="pill-button"
+                        style="text-decoration: none; margin-left: 15px; padding: 8px 20px; font-size: 11px;">
+                        <span>ЗАПИСАТЬСЯ</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="btn-icon" style="margin-left: 5px;">
+                            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </a>
                 </div>
