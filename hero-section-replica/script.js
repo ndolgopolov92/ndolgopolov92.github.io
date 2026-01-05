@@ -292,3 +292,117 @@ window.addEventListener('scroll', highlightCenterPortfolioItem);
 window.addEventListener('resize', highlightCenterPortfolioItem); // Handle resize
 // Initial call
 highlightCenterPortfolioItem();
+
+// Custom scroll for FAB About button (Adjusted for mobile)
+document.addEventListener('click', (e) => {
+    const fabLink = e.target.closest('.fab-about');
+
+    if (fabLink) {
+        e.preventDefault();
+        const aboutSection = document.querySelector('#about');
+        if (aboutSection) {
+            // Get current absolute position
+            const rect = aboutSection.getBoundingClientRect();
+            // Current scroll position
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Calculate absolute top position of the element
+            const elementTop = rect.top + scrollTop;
+
+            // User says "scrolls too much down". Wants it "1cm higher" (viewport higher).
+            // So we need a smaller scrollY value.
+            // 1cm is approx 40px.
+            // We'll set the target to be 40px ABOVE the element top to leave a gap.
+            const offset = -40;
+
+            window.scrollTo({
+                top: elementTop + offset,
+                behavior: 'smooth'
+            });
+
+            // Close FAB menu
+            const fabOptions = document.querySelector('.fab-options');
+            if (fabOptions) fabOptions.classList.remove('active');
+        }
+    }
+});
+
+// Carousel Logic
+const track = document.querySelector('.carousel-track');
+if (track) {
+    let scrollInterval;
+    const slides = document.querySelectorAll('.carousel-slide');
+
+    // Clone first slide for infinite loop effect
+    const firstSlideClone = slides[0].cloneNode(true);
+    track.appendChild(firstSlideClone);
+
+    // Re-query slides including clone
+    const allSlides = document.querySelectorAll('.carousel-slide');
+    let currentSlide = 0;
+
+    // Auto Scroll Function
+    const startAutoScroll = () => {
+        clearInterval(scrollInterval);
+        scrollInterval = setInterval(() => {
+            currentSlide++;
+
+            // Scroll to next slide smoothly
+            track.scrollTo({
+                left: currentSlide * track.offsetWidth,
+                behavior: 'smooth'
+            });
+
+            // Check if we scrolled to the clone (last slide)
+            if (currentSlide === allSlides.length - 1) {
+                // Wait for smooth scroll to finish, then snap back instantly
+                setTimeout(() => {
+                    currentSlide = 0;
+                    // Disable smooth scrolling temporarily to snap back instantly
+                    track.style.scrollBehavior = 'auto'; // Ensure CSS doesn't override
+                    track.scrollTo({
+                        left: 0,
+                        behavior: 'auto'
+                    });
+                    // Re-enable smooth (or remove inline style)
+                    requestAnimationFrame(() => {
+                        track.style.scrollBehavior = '';
+                    });
+                }, 800); // 800ms matches typical slow smooth scroll duration
+            }
+        }, 3000);
+    };
+
+    // Start initially
+    startAutoScroll();
+
+    // Pause on user interaction
+    const stopAutoScroll = () => {
+        clearInterval(scrollInterval);
+    };
+
+    // Restart on interaction end
+    const restartAutoScroll = () => {
+        stopAutoScroll();
+        startAutoScroll();
+    };
+
+    // Listeners for manual interaction
+    track.addEventListener('mousedown', stopAutoScroll);
+    track.addEventListener('touchstart', stopAutoScroll, { passive: true });
+
+    // Update index on manual scroll (optional sync)
+    track.addEventListener('scroll', () => {
+        // If user manually scrolls near end, logic might get complex. 
+        // For simplicity, we just track rough index.
+        // If exact sync needed for infinite manual scroll, it's more complex.
+        const index = Math.round(track.scrollLeft / track.offsetWidth);
+        if (index !== currentSlide && index < allSlides.length - 1) {
+            currentSlide = index;
+        }
+    }, { passive: true });
+
+    track.addEventListener('mouseup', restartAutoScroll);
+    track.addEventListener('touchend', restartAutoScroll);
+    track.addEventListener('mouseleave', restartAutoScroll);
+}

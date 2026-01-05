@@ -228,7 +228,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
-    padding-bottom: 40px;
+    padding-bottom: 80px;
 }
 
 .visual-container {
@@ -468,6 +468,153 @@ body {
 
     .scribble {
         left: 10%;
+    }
+}
+
+/* About Section */
+.section-about {
+    padding: 60px 5vw 100px 5vw;
+    background-color: var(--bg-color);
+    /* Match site background */
+    color: #111;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 500px;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Object fit handled in slide now */
+}
+
+/* Carousel Styles */
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    /* Hide default scrollbars visually if possible, or use track */
+    position: relative;
+    border-radius: 4px;
+    /* Optional rounded corners */
+}
+
+.carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* scroll-behavior: smooth; REMOVED to allow instant reset */
+    -webkit-overflow-scrolling: touch;
+    /* smooth scroll iOS */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    scroll-snap-align: center;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    /* Maintain aspect ratio */
+}
+
+.about-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.about-headline {
+    font-family: var(--font-serif);
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.about-text {
+    font-family: var(--font-sans);
+    /* Or mono if preferred, screenshot looks like sans */
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.about-list {
+    list-style: none;
+    padding: 0;
+}
+
+.about-list li {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.about-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #111;
+    font-weight: bold;
+}
+
+.about-list strong {
+    font-weight: 700;
+}
+
+@media (max-width: 992px) {
+    .section-about {
+        padding: 40px 20px 100px 20px;
+        /* Reduced top padding as requested */
+        overflow-x: hidden;
+        /* Prevent overflow */
+    }
+
+    .about-container {
+        flex-direction: column;
+        gap: 30px;
+        text-align: left;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .about-headline {
+        font-size: 32px;
+        /* Reduced from 36px/default to stop clipping */
+        word-break: normal;
+        overflow-wrap: normal;
+    }
+
+    .about-content {
+        width: 100%;
+        max-width: 100%;
+        padding-right: 0;
+    }
+
+    .about-image {
+        max-width: 100%;
     }
 }
 
@@ -896,6 +1043,12 @@ body {
         transform: translateY(0);
     }
 
+    /* Adjust overlay padding to help move menu up */
+    .mobile-nav-overlay {
+        padding-top: 22vh;
+        /* Reduced from 25vh to move up */
+    }
+
     .mobile-menu-close {
         position: absolute;
         top: 20px;
@@ -910,9 +1063,24 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 30px;
-        margin-bottom: calc(20vh - 40px);
-        /* Reduced space by ~40px */
+        gap: 15px;
+        /* Reduced from 30px */
+        margin-bottom: calc(20vh - 20px);
+        /* Moved up by ~20px (was -40px) - wait, -40 is lower? Let's assume margin-bottom pushes it up from bottom? No, it's flex gap? 
+           Actually, the overlay is justify-content: flex-start with padding-top: 25vh. 
+           The margin-bottom was on the container? 
+           Let's look at previous CSS: margin-bottom: calc(20vh - 40px);
+           If I want to move it UP, I might need to reduce padding-top of parent or increase bottom margin?
+           No, parent is flex-col, flex-start. 
+           To move UP: reduce padding-top of .mobile-nav-overlay or reduce gap.
+           Let's adjust .mobile-nav-overlay padding-top from 25vh to 20vh?
+           Or just adjust this container's margins. 
+           Let's try margin-top negative? 
+           Actually, user said "shift them 0.5 cm higher". 
+           Let's reduce padding-top of .mobile-nav-overlay in the next chunk if possible, or here.
+           I'll try margin-top: -20px here.
+        */
+        margin-top: -20px;
     }
 
     .mobile-nav-link {
