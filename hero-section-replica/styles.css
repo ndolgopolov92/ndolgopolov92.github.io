@@ -512,7 +512,7 @@ body {
 
 .carousel-track {
     display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-snap-type: x mandatory;
     /* scroll-behavior: smooth; REMOVED to allow instant reset */
     -webkit-overflow-scrolling: touch;
@@ -1313,6 +1313,7 @@ body {
         z-index: 2;
     }
 
+
     /* Pulse Animation on Pseudo-element to preserve 3D shadows */
     .fab-main::before {
         content: '';
@@ -1332,6 +1333,11 @@ body {
         /* Larger than default 20px */
         height: 24px;
     }
+
+    /* Pop-in Bounce Animation applied to FAB */
+    .fab-main {
+        animation: fabPopIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s backwards;
+    }
 }
 
 @keyframes fabPulse {
@@ -1348,5 +1354,22 @@ body {
     100% {
         box-shadow: 0 0 0 0 rgba(17, 17, 17, 0);
         opacity: 0;
+    }
+}
+
+@keyframes fabPopIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
