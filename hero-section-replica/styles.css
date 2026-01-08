@@ -809,6 +809,170 @@ body {
     margin-bottom: 20px;
 }
 
+/* --- Admin Login Modal --- */
+.admin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.admin-modal.active {
+    display: flex;
+}
+
+.admin-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.admin-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.admin-btn:hover {
+    background-color: #555;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+/* --- Admin Edit Controls --- */
+.admin-controls {
+    display: none;
+    /* Hidden by default */
+    margin-left: 10px;
+    gap: 5px;
+}
+
+.body-admin-mode .admin-controls {
+    display: inline-flex;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-add {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-edit {
+    color: #f39c12;
+}
+
+.btn-delete {
+    color: #e74c3c;
+}
+
+.btn-add {
+    color: #27ae60;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.btn-edit:hover {
+    background-color: rgba(243, 156, 18, 0.1);
+}
+
+.btn-delete:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.btn-add:hover {
+    background-color: rgba(39, 174, 96, 0.1);
+}
+
+.add-category-btn,
+.add-service-btn {
+    margin: 20px auto;
+    display: none;
+    background-color: #27ae60;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.body-admin-mode .add-category-btn {
+    display: block;
+}
+
+.body-admin-mode .add-service-btn {
+    display: block;
+    margin: 10px 0;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+/* Admin Logout Button (Fixed Top Right) */
+.admin-logout {
+    display: none;
+    position: fixed;
+    top: 80px;
+    /* Below header */
+    right: 20px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.body-admin-mode .admin-logout {
+    display: block;
+}
+
 .address,
 .hours {
     font-family: var(--font-mono);
@@ -1372,4 +1536,123 @@ body {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+/* Legal Footer Section */
+.site-footer {
+    background-color: var(--bg-color);
+    /* Changed to Beige */
+    padding: 30px 20px;
+    margin-top: 0;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    /* Ensure it's below FAB if FAB is z-index 100 */
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-links a {
+    color: #111;
+    /* Changed to Dark text */
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-decoration: none;
+    opacity: 0.7;
+    text-align: center;
+    line-height: 1.5;
+    transition: opacity 0.3s ease;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+}
+
+/* Admin Login Icon */
+.admin-login-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-icon {
+    color: #111;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-tooltip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #111;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    /* Prevent interference */
+    white-space: nowrap;
+}
+
+/* Hover effects */
+.admin-login-container:hover .admin-icon {
+    opacity: 1;
+}
+
+.admin-login-container:hover .admin-tooltip {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding-bottom: 100px;
+        /* Add extra spacing for FAB on mobile if needed */
+    }
+
+    /* Adjust admin icon for mobile if needed, though bottom right is usually fine */
+    .admin-login-container {
+        bottom: 10px;
+        right: auto;
+        left: 20px;
+    }
+}
+
+/* Drag & Drop Visuals */
+.price-category.dragging,
+.service-item.dragging {
+    opacity: 0.4;
+    border: 2px dashed #999;
+    background-color: #f0f0f0;
+}
+
+.price-category.over {
+    border-top: 3px solid #27ae60;
+    background-color: rgba(39, 174, 96, 0.1);
+    transform: scale(1.01);
+}
+
+.service-item.over {
+    border-top: 2px solid #27ae60;
+    background-color: rgba(39, 174, 96, 0.1);
+}
+
+.price-category {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.service-item {
+    transition: background-color 0.2s ease;
 }

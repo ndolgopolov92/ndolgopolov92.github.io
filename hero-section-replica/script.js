@@ -43,7 +43,7 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
-// Price Accordion
+// Price Accordion (Initial Static)
 document.querySelectorAll('.category-header').forEach(header => {
     header.addEventListener('click', () => {
         const category = header.parentElement;
@@ -90,8 +90,7 @@ if (mobileAddressLink) {
 
 // FAB Scroll Interaction (Hide/Show on footer)
 const fabContainer = document.querySelector('.fab-container');
-const footer = document.querySelector('footer'); // Note: Footer might not exist in provided HTML but good practice.
-// If no footer, just keep it visible or hide at very bottom.
+const footer = document.querySelector('footer');
 
 window.addEventListener('scroll', () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
@@ -99,112 +98,261 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Dynamic Price List Integration
-// Using CORS proxy to avoid browser restrictions if running locally or if blocked by Sheets
-const GOOGLE_SHEET_CSV_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSbGIKdMEYpKPpti2e4A3eQvpfVKa4xtPj_PfBwxh_sH9p12oCkfTPUBnIr-RxGnyh63hPy98WoEC54/pub?output=csv');
+// --- Dynamic Price List with Admin Features ---
 
-async function fetchAndRenderPrices() {
-    const priceContainer = document.querySelector('.price-container');
-    if (!priceContainer) return;
-
-    const loadingMsg = priceContainer.querySelector('.loading-message');
-
-    try {
-        const response = await fetch(GOOGLE_SHEET_CSV_URL);
-        if (!response.ok) throw new Error('Network error');
-        const data = await response.text();
-        const categories = parseCSV(data);
-        renderPrices(priceContainer, categories);
-    } catch (error) {
-        console.error('Error fetching prices:', error);
-        if (loadingMsg) {
-            loadingMsg.textContent = 'Ошибка загрузки цен. Пожалуйста, проверьте интернет или попробуйте позже.';
-            loadingMsg.style.color = 'red';
-        }
+// Initial Hardcoded Data
+const INITIAL_PRICES = [
+    {
+        name: "Маникюр и педикюр",
+        services: [
+            { name: "Маникюр", price: "1000" },
+            { name: "Придание формы ногтям ", price: "400" },
+            { name: "Парафинотерапия рук ", price: "400" },
+            { name: "Работа в 4 руки ", price: "500" },
+            { name: "Маникюр + гель-лак Elpaza", price: "1900" },
+            { name: "Маникюр + гель-лак CN Club", price: "2200" },
+            { name: "Маникюр + гель Luxio", price: "2600" },
+            { name: "Маникюр +гель", price: "2900" },
+            { name: "Маникюр детский", price: "500" },
+            { name: "Снятие лака (руки)", price: "150" },
+            { name: "Снятие гель лака ", price: "300" },
+            { name: "Снятие гель лака (без основной услуги) ", price: "500" },
+            { name: "Маникюр + лак", price: "1450" },
+            { name: "Педикюр - экспресс ", price: "1400" },
+            { name: "Дисковый педикюр ", price: "2500" },
+            { name: "Педикюр", price: "2000" },
+            { name: "Педикюр + Elpaza", price: "2900" },
+            { name: "Педикюр + CN Club", price: "3200" },
+            { name: "Педикюр + гель Luxio", price: "3600" },
+            { name: "Педикюр + лак", price: "2450" },
+            { name: "Обработка сложного ногтя ", price: "300" },
+            { name: "Обработка сложного участка стопы ", price: "200" }
+        ]
+    },
+    {
+        name: "Брови и ресницы",
+        services: [
+            { name: "Ламинирование бровей", price: "2200" },
+            { name: "Архитектура бровей ", price: "1300" },
+            { name: "Ботокс бровей ", price: "2200" },
+            { name: "Ботокс ресниц ", price: "2200" },
+            { name: "Окрашивание бровей хной", price: "900" },
+            { name: "Окрашивание бровей краской", price: "700" },
+            { name: "Коррекция бровей", price: "800" },
+            { name: "Ламинирование ресниц", price: "2200" },
+            { name: "Окрашивание ресниц", price: "700" },
+            { name: "Снятие наращенных ресниц ", price: "500" },
+            { name: "Наращивание ресниц 1,5D", price: "2800" },
+            { name: "Наращивание ресниц 1D", price: "2500" },
+            { name: "Наращивание ресниц 2D", price: "2500" },
+            { name: "Наращивание ресниц 2,5D ", price: "3400" },
+            { name: "Наращивание ресниц от 4D ", price: "4300" },
+            { name: "Наращивание ресниц 3D", price: "3700" },
+            { name: "Снятие наращенных ресниц", price: "500" },
+            { name: "Наращивание ресниц - уголки глаз ", price: "1600" },
+            { name: "Наращивание ресниц- неполный объем ", price: "2100" },
+            { name: "Коррекция 1D ", price: "1500" },
+            { name: "Коррекция 1,5 D ", price: "1700" },
+            { name: "Коррекция 2D", price: "1850" }
+        ]
+    },
+    {
+        name: "Депиляция",
+        services: [
+            { name: "Шугаринг глубокое бикини ", price: "1300" },
+            { name: "Глубокое бикини полимерным воском ", price: "1900" },
+            { name: "Глубокое бикини Skin's", price: "2800" },
+            { name: "Шугаринг бикини классика ", price: "750" },
+            { name: "Бикини классика полимерным воском ", price: "900" },
+            { name: "Шугаринг подмышки ", price: "500" },
+            { name: "Подмышки полимерным воском ", price: "600" },
+            { name: "Подмышки Skin's", price: "1300" },
+            { name: "Шугаринг голеней ", price: "1300" },
+            { name: "Восковая депиляция голеней ", price: "900" },
+            { name: "Голени полимерным воском ", price: "1750" },
+            { name: "Шугаринг бёдер", price: "1300" },
+            { name: "Восковая депиляция бёдер", price: "900" },
+            { name: "Депиляция бёдер полимерным воском ", price: "1750" },
+            { name: "Депиляция Skins бёдер ", price: "3100" },
+            { name: "Депиляция нитью верхняя губа ", price: "400" },
+            { name: "Шугаринг верхней губы/дорожки/подбородка", price: "350" },
+            { name: "Депиляция верхней губы/дорожки/подбородка полимерным воском ", price: "450" },
+            { name: "Депиляция Skins верхней губы/дорожки/подбородка", price: "1000" },
+            { name: "Руки до локтя воском ", price: "600" },
+            { name: "Шугаринг рук до локтя ", price: "700" },
+            { name: "Руки до локтя полимерным воском ", price: "900" }
+        ]
+    },
+    {
+        name: "Парикмахерские услуги",
+        services: [
+            { name: "Женская стрижка", price: "1200" },
+            { name: "Стрижка детская", price: "700" },
+            { name: "Стрижка челки", price: "500" },
+            { name: "Стрижка кончиков", price: "1000" },
+            { name: "Укладка / прическа вечерняя", price: "3500" },
+            { name: "Укладка коктейльная", price: "2500" },
+            { name: "Укладка стайлером", price: "1200" },
+            { name: "Укладка на брашинг", price: "1000" },
+            { name: "Тотал блонд полный", price: "5750" },
+            { name: "Тотал блонд корни", price: "4750" },
+            { name: "Классическое мелирование", price: "2200" },
+            { name: "Осветление", price: "2400" },
+            { name: "Окрашивание в 1 тон", price: "2250" },
+            { name: "Окрашивание корней", price: "2250" },
+            { name: "Кератиновое выпрямление", price: "5000" }
+        ]
+    },
+    {
+        name: "Услуги для мужчин",
+        services: [
+            { name: "Педикюр", price: "2400" },
+            { name: "Японский маникюр", price: "2300" },
+            { name: "Маникюр", price: "1500" },
+            { name: "Окрашивание бровей", price: "700" },
+            { name: "Коррекция бровей", price: "700" },
+            { name: "Стрижка машинкой", price: "800" },
+            { name: "Мужская стрижка", price: "1500" },
+            { name: "Одна большая зона", price: "2600" },
+            { name: "Бикини глубокое", price: "2500" },
+            { name: "Одна средняя зона", price: "1200" },
+            { name: "Подмышечные впадины", price: "1000" },
+            { name: "Одна малая зона", price: "800" },
+            { name: "Глубокое бикини SKINS", price: "4000" },
+            { name: "Подмышечные впадины SKINS", price: "1900" },
+            { name: "Одна малая зона SKINS", price: "1500" }
+        ]
     }
+];
+
+// Load prices from LocalStorage or fallback to Initial
+let priceData = JSON.parse(localStorage.getItem('sitePrices')) || INITIAL_PRICES;
+
+// Save to LocalStorage
+function savePrices() {
+    localStorage.setItem('sitePrices', JSON.stringify(priceData));
+    renderPrices();
 }
 
-function parseCSV(csvText) {
-    const lines = csvText.split(/\r?\n/);
-    if (lines.length < 2) return [];
+// Function to Render Prices
+function renderPrices() {
+    const container = document.querySelector('.price-container');
+    if (!container) return;
 
-    const headers = parseCSVLine(lines[0]);
-    const categories = [];
-
-    // Identify categories from headers (every 2nd column)
-    for (let i = 0; i < headers.length; i += 2) {
-        if (headers[i]) {
-            categories.push({
-                name: headers[i],
-                colIndex: i,
-                services: []
-            });
+    // Capture currently active categories by index
+    const activeIndices = [];
+    document.querySelectorAll('.price-category').forEach((el, index) => {
+        if (el.classList.contains('active')) {
+            activeIndices.push(index);
         }
-    }
+    });
 
-    // Parse rows
-    for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const row = parseCSVLine(lines[i]);
+    container.innerHTML = ''; // Clear existing
 
-        categories.forEach(cat => {
-            const serviceName = row[cat.colIndex];
-            const price = row[cat.colIndex + 1];
-
-            if (serviceName && serviceName.trim() !== '') {
-                cat.services.push({
-                    name: serviceName.trim(),
-                    price: price ? price.trim() : ''
-                });
-            }
-        });
-    }
-
-    return categories;
-}
-
-// Helper to handle CSV quote parsing
-function parseCSVLine(text) {
-    const result = [];
-    let start = 0;
-    let inQuotes = false;
-
-    for (let i = 0; i < text.length; i++) {
-        if (text[i] === '"') {
-            inQuotes = !inQuotes;
-        } else if (text[i] === ',' && !inQuotes) {
-            let field = text.substring(start, i);
-            field = field.replace(/^"|"$/g, '').replace(/""/g, '"'); // Unquote and unescape
-            result.push(field);
-            start = i + 1;
-        }
-    }
-    // Last field
-    let field = text.substring(start);
-    field = field.replace(/^"|"$/g, '').replace(/""/g, '"');
-    result.push(field);
-
-    return result;
-}
-
-function renderPrices(container, categories) {
-    container.innerHTML = ''; // Clear static content
-
-    categories.forEach(cat => {
-        if (cat.services.length === 0) return;
-
+    priceData.forEach((cat, catIndex) => {
         const catDiv = document.createElement('div');
         catDiv.className = 'price-category';
+        if (activeIndices.includes(catIndex)) {
+            catDiv.classList.add('active');
+        }
+
+        // --- Drag Logic for Category ---
+        catDiv.draggable = true; // Enables attribute but we limit logic to handle click
+        catDiv.addEventListener('dragstart', (e) => {
+            if (!document.body.classList.contains('body-admin-mode')) {
+                e.preventDefault();
+                return;
+            }
+            e.dataTransfer.setData('text/plain', JSON.stringify({ type: 'category', index: catIndex }));
+            e.dataTransfer.effectAllowed = 'move';
+            catDiv.classList.add('dragging');
+        });
+        catDiv.addEventListener('dragend', () => {
+            catDiv.classList.remove('dragging');
+            document.querySelectorAll('.price-category').forEach(el => el.classList.remove('over'));
+        });
+        catDiv.addEventListener('dragover', (e) => {
+            if (!document.body.classList.contains('body-admin-mode')) return;
+            e.preventDefault();
+            catDiv.classList.add('over');
+        });
+        catDiv.addEventListener('dragleave', () => {
+            catDiv.classList.remove('over');
+        });
+        catDiv.addEventListener('drop', (e) => {
+            if (!document.body.classList.contains('body-admin-mode')) return;
+            e.preventDefault();
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            if (data.type === 'category' && data.index !== catIndex) {
+                // Move category data
+                const movedItem = priceData.splice(data.index, 1)[0];
+                priceData.splice(catIndex, 0, movedItem);
+                savePrices();
+            }
+        });
 
         const headerDiv = document.createElement('div');
         headerDiv.className = 'category-header';
-        headerDiv.innerHTML = `
-            <span>${cat.name}</span>
-            <span class="toggle-icon">+</span>
-        `;
 
-        // Accordion toggle logic for new elements
-        headerDiv.addEventListener('click', () => {
+        // Category Name & Edit Controls
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = cat.name;
+
+        // Admin Controls for Category
+        const adminControls = document.createElement('div');
+        adminControls.className = 'admin-controls';
+
+        // Drag Handle
+        const dragHandle = document.createElement('span');
+        dragHandle.className = 'drag-handle';
+        dragHandle.innerHTML = '&#9776;'; // Hamburger icon
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-edit';
+        editBtn.innerHTML = '✎';
+        editBtn.onclick = (e) => {
+            e.stopPropagation();
+            const newName = prompt('Изменить название категории:', cat.name);
+            if (newName) {
+                priceData[catIndex].name = newName;
+                savePrices();
+            }
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-delete';
+        deleteBtn.innerHTML = '🗑';
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (confirm('Удалить категорию "' + cat.name + '" и все услуги в ней?')) {
+                priceData.splice(catIndex, 1);
+                savePrices();
+            }
+        };
+
+        adminControls.appendChild(dragHandle); // Include drag handle
+        adminControls.appendChild(editBtn);
+        adminControls.appendChild(deleteBtn);
+
+        // Header Structure
+        const leftSide = document.createElement('div');
+        leftSide.style.display = 'flex';
+        leftSide.style.alignItems = 'center';
+        leftSide.appendChild(nameSpan);
+        leftSide.appendChild(adminControls);
+
+        const toggleIcon = document.createElement('span');
+        toggleIcon.className = 'toggle-icon';
+        toggleIcon.textContent = '+';
+        toggleIcon.style.marginLeft = 'auto';
+
+        headerDiv.appendChild(leftSide);
+        headerDiv.appendChild(toggleIcon);
+
+        headerDiv.addEventListener('click', (e) => {
+            // Don't toggle if clicking admin controls
+            if (e.target.closest('.admin-controls')) return;
+
             catDiv.classList.toggle('active');
             const list = catDiv.querySelector('.services-list');
             if (catDiv.classList.contains('active')) {
@@ -216,29 +364,254 @@ function renderPrices(container, categories) {
 
         const listDiv = document.createElement('div');
         listDiv.className = 'services-list';
+        if (catDiv.classList.contains('active')) {
+            listDiv.classList.add('active');
+        }
 
         const innerDiv = document.createElement('div');
         innerDiv.className = 'services-list-inner';
 
-        cat.services.forEach(service => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'service-item';
-            itemDiv.innerHTML = `
-                <span class="service-name">${service.name}</span>
-                <span class="service-price">${service.price}</span>
-            `;
-            innerDiv.appendChild(itemDiv);
-        });
+        if (cat.services && cat.services.length > 0) {
+            cat.services.forEach((service, serviceIndex) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'service-item';
+
+                // --- Drag Logic for Service ---
+                itemDiv.draggable = true;
+                itemDiv.addEventListener('dragstart', (e) => {
+                    if (!document.body.classList.contains('body-admin-mode')) {
+                        e.preventDefault();
+                        return;
+                    }
+                    e.stopPropagation(); // Prevent bubbling to category
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        type: 'service',
+                        catIndex: catIndex,
+                        serviceIndex: serviceIndex
+                    }));
+                    itemDiv.classList.add('dragging');
+                });
+                itemDiv.addEventListener('dragend', (e) => {
+                    e.stopPropagation();
+                    itemDiv.classList.remove('dragging');
+                    document.querySelectorAll('.service-item').forEach(el => el.classList.remove('over'));
+                });
+                itemDiv.addEventListener('dragover', (e) => {
+                    if (!document.body.classList.contains('body-admin-mode')) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    itemDiv.classList.add('over');
+                });
+                itemDiv.addEventListener('dragleave', (e) => {
+                    e.stopPropagation();
+                    itemDiv.classList.remove('over');
+                });
+                itemDiv.addEventListener('drop', (e) => {
+                    if (!document.body.classList.contains('body-admin-mode')) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    if (data.type === 'service' && data.catIndex === catIndex && data.serviceIndex !== serviceIndex) {
+                        // Move service
+                        const services = priceData[catIndex].services;
+                        const movedItem = services.splice(data.serviceIndex, 1)[0];
+                        services.splice(serviceIndex, 0, movedItem);
+                        savePrices();
+                    }
+                });
+
+                // Service HTML
+                const serviceContent = document.createElement('div');
+                serviceContent.style.flex = '1';
+                serviceContent.style.display = 'flex';
+                serviceContent.style.justifyContent = 'space-between';
+                serviceContent.style.width = '100%';
+
+                const sName = document.createElement('span');
+                sName.className = 'service-name';
+                sName.textContent = service.name;
+
+                const sPrice = document.createElement('span');
+                sPrice.className = 'service-price';
+                sPrice.textContent = service.price;
+
+                serviceContent.appendChild(sName);
+                serviceContent.appendChild(sPrice);
+
+                // Admin Controls for Service
+                const sAdminControls = document.createElement('div');
+                sAdminControls.className = 'admin-controls';
+
+                // Drag Handle
+                const sDragHandle = document.createElement('span');
+                sDragHandle.className = 'drag-handle';
+                sDragHandle.innerHTML = '&#9776;'; // Hamburger icon
+
+                const sEditBtn = document.createElement('button');
+                sEditBtn.className = 'btn-edit';
+                sEditBtn.innerHTML = '✎';
+                sEditBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    const newName = prompt('Название услуги:', service.name);
+                    const newPrice = prompt('Цена услуги:', service.price);
+                    if (newName !== null && newPrice !== null) {
+                        priceData[catIndex].services[serviceIndex] = { name: newName, price: newPrice };
+                        savePrices();
+                    }
+                };
+
+                const sDeleteBtn = document.createElement('button');
+                sDeleteBtn.className = 'btn-delete';
+                sDeleteBtn.innerHTML = '🗑';
+                sDeleteBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (confirm('Удалить услугу "' + service.name + '"?')) {
+                        priceData[catIndex].services.splice(serviceIndex, 1);
+                        savePrices();
+                    }
+                };
+
+                sAdminControls.appendChild(sDragHandle);
+                sAdminControls.appendChild(sEditBtn);
+                sAdminControls.appendChild(sDeleteBtn);
+
+                // Prepend drag handle logic is tricky visually, let's just use the item itself as draggable
+                // but visually show the handle.
+
+                itemDiv.appendChild(serviceContent);
+                itemDiv.appendChild(sAdminControls); // Append admin controls to item
+
+                innerDiv.appendChild(itemDiv);
+            });
+        }
+
+        // "Add Service" Button (Admin Only)
+        const addServiceBtn = document.createElement('button');
+        addServiceBtn.className = 'add-service-btn';
+        addServiceBtn.textContent = '+ Добавить услугу';
+        addServiceBtn.onclick = (e) => {
+            e.stopPropagation();
+            const newName = prompt('Название новой услуги:');
+            const newPrice = prompt('Цена услуги:');
+            if (newName && newPrice) {
+                if (!priceData[catIndex].services) priceData[catIndex].services = [];
+                priceData[catIndex].services.push({ name: newName, price: newPrice });
+                savePrices();
+                // Ensure category stays open
+                // catDiv.classList.add('active'); // Re-rendering kills current state unless handled complexly
+                // For simplicity, re-render will collapse. Can be improved but meets implementation.
+            }
+        };
+        innerDiv.appendChild(addServiceBtn);
 
         listDiv.appendChild(innerDiv);
         catDiv.appendChild(headerDiv);
         catDiv.appendChild(listDiv);
         container.appendChild(catDiv);
     });
+
+    // "Add Category" Button (Admin Only)
+    const addCatBtn = document.createElement('button');
+    addCatBtn.className = 'add-category-btn';
+    addCatBtn.textContent = '+ Добавить категорию';
+    addCatBtn.onclick = () => {
+        const name = prompt('Название новой категории:');
+        if (name) {
+            priceData.push({ name: name, services: [] });
+            savePrices();
+        }
+    };
+    container.appendChild(addCatBtn);
 }
 
-// Load prices on start
-document.addEventListener('DOMContentLoaded', fetchAndRenderPrices);
+
+// --- Admin Logic ---
+
+const adminIcon = document.querySelector('.admin-icon');
+const adminModal = document.getElementById('adminLoginModal');
+const closeModal = document.querySelector('.close-modal');
+const adminLoginBtn = document.getElementById('adminLoginBtn');
+const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+
+// Toggle Modal
+if (adminIcon) {
+    adminIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (localStorage.getItem('isAdmin') === 'true') {
+            alert('Вы уже вошли как администратор.');
+        } else {
+            adminModal.classList.add('active');
+        }
+    });
+}
+
+if (closeModal) {
+    closeModal.addEventListener('click', () => {
+        adminModal.classList.remove('active');
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === adminModal) {
+        adminModal.classList.remove('active');
+    }
+});
+
+// Login Check
+if (adminLoginBtn) {
+    adminLoginBtn.addEventListener('click', () => {
+        const user = document.getElementById('adminUsername').value;
+        const pass = document.getElementById('adminPassword').value;
+
+        if (user === 'admin' && pass === 'QaWsEdRf123') {
+            localStorage.setItem('isAdmin', 'true');
+            enableAdminMode();
+            adminModal.classList.remove('active');
+            alert('Успешный вход!');
+        } else {
+            alert('Неверный логин или пароль');
+        }
+    });
+}
+
+// Enable Admin Mode
+function enableAdminMode() {
+    document.body.classList.add('body-admin-mode');
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'block';
+}
+
+// Disable Admin Mode
+function disableAdminMode() {
+    document.body.classList.remove('body-admin-mode');
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
+}
+
+// Check on Load
+function checkAdminStatus() {
+    if (localStorage.getItem('isAdmin') === 'true') {
+        enableAdminMode();
+    } else {
+        disableAdminMode();
+    }
+}
+
+// Logout
+if (adminLogoutBtn) {
+    adminLogoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('isAdmin');
+        disableAdminMode();
+        location.reload(); // Refresh to clear state
+    });
+}
+
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    renderPrices();
+    checkAdminStatus();
+});
+
+
 const fabMain = document.querySelector('.fab-main');
 const fabOptions = document.querySelector('.fab-options');
 

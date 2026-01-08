@@ -227,6 +227,27 @@
 
     </section>
 
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="legal_personal_data.html" target="_blank">Согласие на обработку персональных данных</a>
+            <a href="legal_privacy.html" target="_blank">Политика конфиденциальности в отношении обработки персональных
+                данных</a>
+            <a href="legal_advertising.html" target="_blank">Согласие на получение рекламной и информационной
+                рассылки</a>
+        </div>
+        <div class="admin-login-container">
+            <a href="#" class="admin-icon" aria-label="Admin Login">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+            </a>
+            <span class="admin-tooltip">вход для админа</span>
+        </div>
+    </footer>
+
     <div class="fab-container">
         <div class="fab-options">
             <div class="fab-group-icons">
@@ -263,6 +284,20 @@
             <span>ЗАПИСАТЬСЯ</span>
         </button>
     </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Вход для администратора</h3>
+            <input type="text" id="adminUsername" class="admin-input" placeholder="Логин">
+            <input type="password" id="adminPassword" class="admin-input" placeholder="Пароль">
+            <button id="adminLoginBtn" class="admin-btn">Войти</button>
+        </div>
+    </div>
+
+    <!-- Admin Logout Button (Visible only when logged in) -->
+    <button id="adminLogoutBtn" class="admin-logout">Выйти (Админ)</button>
 
     <script src="hero-section-replica/script.js"></script>
 </body>
