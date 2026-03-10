@@ -1,3 +1,8 @@
+// Prevent browser from restoring scroll position and jumping around on reload
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
 
 // Sticky Header Logic
 const header = document.querySelector('.site-header');
@@ -779,3 +784,102 @@ if (track) {
     track.addEventListener('touchend', restartAutoScroll);
     track.addEventListener('mouseleave', restartAutoScroll);
 }
+
+// --- Multi-Location Support & Booking Modal ---
+
+const LOCATIONS = {
+    vestor: {
+        name: 'ТЦ "Вестор"',
+        address: 'Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор", 2 этаж',
+        phone: '+7 (985) 809-94-13',
+        hours: 'Ежедневно 10.00 - 22.00',
+        bookingUrl: 'https://n613524.yclients.com',
+        mapSrc: 'https://yandex.ru/map-widget/v1/?text=Одинцово,+Можайское+шоссе,+133А&z=17',
+        links: {
+            gis: 'https://2gis.ru/odintsovo/search/Можайское%20шоссе%20133а',
+            yandex: 'https://yandex.ru/maps/?text=Одинцово,+Можайское+шоссе,+133А',
+            whatsapp: 'https://wa.me/79858099413',
+            telegram: 'https://t.me/+79858099413'
+        }
+    },
+    second: {
+        name: 'Второй Салон',
+        address: 'Москва, Одинцово, Улица Примерная, д. 2, 1 этаж (Заглушка)',
+        phone: '+7 (900) 000-00-00',
+        hours: 'Ежедневно 09.00 - 21.00',
+        bookingUrl: '#booking-url-2',
+        mapSrc: 'https://yandex.ru/map-widget/v1/?text=Москва,+Одинцово&z=12', // Placeholder map
+        links: {
+            gis: '#gis-link-2',
+            yandex: '#yandex-link-2',
+            whatsapp: 'https://wa.me/79000000000',
+            telegram: 'https://t.me/+79000000000'
+        }
+    }
+};
+
+const tabBtns = document.querySelectorAll('.tab-btn');
+const contactAddress = document.getElementById('contact-address');
+const contactPhone = document.getElementById('contact-phone');
+const contactHours = document.getElementById('contact-hours');
+const contactMap = document.getElementById('contact-map');
+const link2gis = document.getElementById('link-2gis');
+const linkYandex = document.getElementById('link-yandex');
+const contactWhatsapp = document.getElementById('contact-whatsapp');
+const contactTelegram = document.getElementById('contact-telegram');
+
+// Tab Switching Logic
+tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Active State
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update Content
+        const locKey = btn.dataset.tab;
+        const data = LOCATIONS[locKey];
+
+        if (data) {
+            // Animate transition (optional, simple opacity fade)
+            const detailsParams = [contactAddress, contactPhone, contactHours];
+
+            contactAddress.textContent = data.address;
+            contactHours.textContent = data.hours;
+            contactPhone.textContent = data.phone;
+            contactPhone.parentElement.href = `tel:${data.phone.replace(/[^\d+]/g, '')}`;
+
+            contactMap.src = data.mapSrc;
+
+            link2gis.href = data.links.gis;
+            linkYandex.href = data.links.yandex;
+
+            contactWhatsapp.href = data.links.whatsapp;
+            contactTelegram.href = data.links.telegram;
+
+            // Update modal buttons links dynamically too? 
+            // Actually modal buttons are static links to specific booking URLs, 
+            // but we might want them to persist? 
+            // The modal buttons are hardcoded in HTML with data-location to serve as jump links 
+            // or we can make them dynamic. 
+            // For now, let's update the modal buttons hrefs based on the data object just in case.
+            const modalBtnVestor = document.querySelector('.modal-btn[data-location="vestor"]');
+            const modalBtnSecond = document.querySelector('.modal-btn[data-location="second"]');
+
+            if (modalBtnVestor) modalBtnVestor.href = LOCATIONS.vestor.bookingUrl;
+            if (modalBtnSecond) modalBtnSecond.textContent = LOCATIONS.second.name; // Update name
+            if (modalBtnSecond) modalBtnSecond.href = LOCATIONS.second.bookingUrl;
+        }
+    });
+});
+
+
+
+// Direct booking link - open booking URL directly without modal
+const triggerButtons = document.querySelectorAll('.trigger-booking-modal');
+triggerButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open('https://n613524.yclients.com', '_blank');
+    });
+});
+
