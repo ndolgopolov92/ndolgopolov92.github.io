@@ -17,7 +17,7 @@
     <header class="site-header">
         <div class="header-left">
             <a href="#hero" class="logo-link">
-                <img src="hero-section-replica/assets/forma-logo.svg" alt="ФОРМА" class="logo">
+                <img src="hero-section-replica/assets/Лого Малина-cropped.svg" alt="МАЛИНА" class="logo">
             </a>
             <nav class="header-nav">
                 <a href="#about">О&thinsp;нас</a>
@@ -28,9 +28,6 @@
         </div>
 
         <div class="header-right">
-            <div class="header-address">
-                <a href="#contacts">Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор"</a>
-            </div>
             <button class="mobile-menu-toggle" aria-label="Menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -38,7 +35,7 @@
             </button>
             <div class="header-socials">
                 <a href="tel:+79858099413" class="social-icon-header phone-icon">
-                    <svg viewBox="0 0 16 16" width="100%" height="100%" fill="#111">
+                    <svg viewBox="0 0 16 16" width="100%" height="100%" fill="#e91e63">
                         <path
                             d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328z" />
                     </svg>
@@ -50,10 +47,10 @@
                     <img src="hero-section-replica/assets/telegram-color.png" alt="Telegram">
                 </a>
             </div>
-            <a href="https://n613524.yclients.com" target="_blank" class="pill-button header-btn"
+            <button class="pill-button header-btn trigger-booking-modal"
                 style="text-decoration: none; display: inline-flex;">
                 <span>ЗАПИСАТЬСЯ</span>
-            </a>
+            </button>
         </div>
     </header>
 
@@ -78,30 +75,36 @@
     </div>
 
     <main class="hero" id="hero">
-        <div class="visual-container">
-            <video src="hero-section-replica/assets/nails.mp4" autoplay muted loop playsinline
-                class="hero-video"></video>
-            <div class="video-text-mask"></div>
-            <div class="video-text-mask-2"></div>
-            <div class="video-text-overlay">Твоя идеальная форма</div>
+        <div class="hero-raspberry-bg">
+            <div class="rasp-shape rasp-shape-1"></div>
+            <div class="rasp-shape rasp-shape-2"></div>
+            <div class="rasp-shape rasp-shape-3"></div>
+            <div class="rasp-shape rasp-shape-4"></div>
+            <div class="rasp-shape rasp-shape-5"></div>
+            <div class="rasp-shape rasp-shape-6"></div>
+            <div class="rasp-shape rasp-shape-7"></div>
+            <div class="rasp-shape rasp-shape-8"></div>
+            <div class="rasp-shape rasp-shape-9"></div>
+            <div class="rasp-shape rasp-shape-10"></div>
         </div>
 
-        <h1 class="headline">
-            Честные цены.<br>Понятный сервис.
-        </h1>
-
-
-
-
-        <div class="bottom-icon">
-            <a href="https://n613524.yclients.com" target="_blank" class="pill-button" style="text-decoration: none;">
-                <span>ЗАПИСАТЬСЯ</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="btn-icon">
-                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </a>
+        <div class="hero-content">
+            <div class="hero-content-left">
+                <img src="hero-section-replica/assets/malina hero.png" alt="Малина" class="hero-image">
+            </div>
+            <div class="hero-content-right">
+                <h1 class="headline">
+                    <span class="line-1">ВКУСНЫЕ ЦЕНЫ.</span>
+                    <span class="line-2">ПОНЯТНЫЙ СЕРВИС.</span>
+                </h1>
+                <p class="hero-subheadline">МАНИКЮР ОТ 1000₽. 1 МИНУТА ОТ МЕТРО.</p>
+                
+                <div class="bottom-icon">
+                    <button class="pill-button trigger-booking-modal" style="text-decoration: none;">
+                        <span>ЗАПИСАТЬСЯ ОНЛАЙН</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -179,11 +182,11 @@
         <h2 class="section-title">Как&nbsp;найти</h2>
         <div class="contacts-container">
             <div class="contact-details">
-                <h3>Ждем вас в гости</h3>
-                <p class="address">Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор", 2 этаж</p>
+                <h3 id="contact-headline">Ждем вас в гости</h3>
+                <p class="address" id="contact-address">Москва, Одинцово, Можайское шоссе 133а ТЦ "Вестор", 2 этаж</p>
                 <div class="map-links">
                     <a href="https://2gis.ru/odintsovo/search/Можайское%20шоссе%20133а" target="_blank"
-                        class="map-icon icon-2gis" title="2GIS">
+                        class="map-icon icon-2gis" id="link-2gis" title="2GIS">
                         <svg viewBox="0 0 24 24" width="24" height="24">
                             <path fill="currentColor"
                                 d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
@@ -192,7 +195,7 @@
                         </svg>
                     </a>
                     <a href="https://yandex.ru/maps/?text=Одинцово,+Можайское+шоссе,+133А" target="_blank"
-                        class="map-icon icon-yandex" title="Yandex Maps">
+                        class="map-icon icon-yandex" id="link-yandex" title="Yandex Maps">
                         <svg viewBox="0 0 24 24" width="24" height="24">
                             <path fill="currentColor"
                                 d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
@@ -200,25 +203,23 @@
                                 dy=".3em">Я</text>
                         </svg>
                     </a>
-                    <a href="https://n613524.yclients.com" target="_blank" class="pill-button"
+                    <a href="https://n613524.yclients.com" target="_blank" class="pill-button contacts-book-btn"
                         style="text-decoration: none; margin-left: 15px; padding: 8px 20px; font-size: 11px;">
                         <span>ЗАПИСАТЬСЯ</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            class="btn-icon" style="margin-left: 5px;">
-                            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
                     </a>
                 </div>
-                <p class="hours">Ежедневно 10.00 - 22.00</p>
-                <p class="phone-large"><a href="tel:+79858099413">+7 (985) 809-94-13</a></p>
+                <p class="hours" id="contact-hours">Ежедневно 10.00 - 22.00</p>
+                <p class="phone-large"><a href="tel:+79858099413" id="contact-phone">+7 (985) 809-94-13</a></p>
                 <div class="social-links-large">
-                    <a href="https://wa.me/79858099413" target="_blank" class="social-btn whatsapp-btn">WhatsApp</a>
-                    <a href="https://t.me/+79858099413" target="_blank" class="social-btn telegram-btn">Telegram</a>
+                    <a href="https://wa.me/79858099413" target="_blank" class="social-btn whatsapp-btn"
+                        id="contact-whatsapp">WhatsApp</a>
+                    <a href="https://t.me/+79858099413" target="_blank" class="social-btn telegram-btn"
+                        id="contact-telegram">Telegram</a>
                 </div>
             </div>
             <div class="map-container">
-                <iframe src="https://yandex.ru/map-widget/v1/?text=Одинцово,+Можайское+шоссе,+133А&z=17" width="100%"
+                <iframe id="contact-map"
+                    src="https://yandex.ru/map-widget/v1/?text=Одинцово,+Можайское+шоссе,+133А&z=17" width="100%"
                     height="300" frameborder="0" allowfullscreen="true" style="position:relative;"></iframe>
             </div>
         </div>
@@ -274,16 +275,17 @@
                 </a>
             </div>
             <div class="fab-group-online">
-                <a href="https://n613524.yclients.com" target="_blank" class="fab-option fab-online-small"
-                    aria-label="Online Booking">
+                <button class="fab-option fab-online-small trigger-booking-modal" aria-label="Online Booking">
                     <span>ОНЛАЙН</span>
-                </a>
+                </button>
             </div>
         </div>
-        <button class="fab-main">
+        <button class="fab-main trigger-booking-modal">
             <span>ЗАПИСАТЬСЯ</span>
         </button>
     </div>
+
+
 
     <!-- Admin Login Modal -->
     <div id="adminLoginModal" class="admin-modal">
